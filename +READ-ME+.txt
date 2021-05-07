@@ -1,7 +1,4 @@
--------+*READ ME*-------
-To play the Game open the "index" file
 in the assets folder and open it 
-with your favorite Browser! (Doesn't support IE)
 Enjoy the Game! :)
 
 +*----If you want to look at my Code:----*+
