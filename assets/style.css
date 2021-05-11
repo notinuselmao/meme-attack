@@ -72,7 +72,7 @@ html {
 
 body {
 	background:url("./images/background.jpg");
-	background-repeat: no-repeat;
+	background-repeat: repeat;
 	background-attachment: fixed;
 	position:absolute;
 	top:0px;

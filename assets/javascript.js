@@ -102,6 +102,10 @@ var building = {
 			game.score -= this.cost[index];
 			this.count[index]++;
 			this.cost[index] = Math.ceil(this.cost[index] * 1.50);
+			
+			if (building.cost > game.score) {
+				display.test();
+			} else
 			display.updateScore();
 			display.updateShop();
 			display.updateUpgrades();
@@ -231,9 +235,13 @@ var display = {
 	updateShop: function() {
 		document.getElementById("shopContainer").innerHTML = "";
 		for (i = 0; i < building.name.length; i++) {
+		if (building.cost[i] <= game.score) {
 			document.getElementById("shopContainer").innerHTML += '<table class="shopButton unselectable" onclick="building.purchase('+i+')"><tr><td id="image"><img src="images/'+building.image[i]+'"></td><td id="nameAndCost"><p>'+building.name[i]+'</p><p><span>'+building.cost[i]+'</span> cumjars</p></td><td id="amount"><span>'+building.count[i]+'</span></td></tr></table>';
+		} else if (building.cost[i] >= game.score) {
+			document.getElementById("shopContainer").innerHTML += '<table class="shopButton unselectable" onclick="building.purchase('+i+')"><tr><td id="image"><img src="images/'+building.image[i]+'" style="opacity:0.5"></td><td id="nameAndCost"><p>'+building.name[i]+'</p><p><span>'+building.cost[i]+'</span> cumjars</p></td><td id="amount"><span>'+building.count[i]+'</span></td></tr></table>';
 		}
-	},
+	}
+},
 	
 	updateUpgrades: function() {
 		document.getElementById("upgradeContainer").innerHTML = "";
@@ -417,6 +425,7 @@ setInterval(function() {
 	}
 	game.score += game.getScorePerSecond();
 	game.totalScore += game.getScorePerSecond();
+			
 	display.updateScore();
 	display.updateAchievements();
 }, 1000); // 1000ms = 1 second
