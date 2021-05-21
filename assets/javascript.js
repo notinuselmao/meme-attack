@@ -237,9 +237,13 @@ var display = {
 		for (i = 0; i < building.name.length; i++) {
 		if (building.cost[i] <= game.score) {
 			document.getElementById("shopContainer").innerHTML += '<table class="shopButton unselectable" onclick="building.purchase('+i+')"><tr><td id="image"><img src="images/'+building.image[i]+'"></td><td id="nameAndCost"><p>'+building.name[i]+'</p><p><span>'+building.cost[i]+'</span> cumjars</p></td><td id="amount"><span>'+building.count[i]+'</span></td></tr></table>';
+		} else if (building.count[i] < 1) {
+			document.getElementById("shopContainer").innerHTML += '<table class="shopButton2 unselectable" style="opacity:0.75" onclick="building.purchase('+i+')"><tr><td id="image"><img src="images/'+building.image[i]+'" style="filter: brightness(0%)"></td><td id="nameAndCost"><p>???</p><p style="color:red;"><span style="color:red;">'+building.cost[i]+'</span> cumjars</p></td><td id="amount"><span>'+building.count[i]+'</span></td></tr></table>';
 		} else if (building.cost[i] >= game.score) {
-			document.getElementById("shopContainer").innerHTML += '<table class="shopButton unselectable" onclick="building.purchase('+i+')"><tr><td id="image"><img src="images/'+building.image[i]+'" style="opacity:0.5"></td><td id="nameAndCost"><p>'+building.name[i]+'</p><p><span>'+building.cost[i]+'</span> cumjars</p></td><td id="amount"><span>'+building.count[i]+'</span></td></tr></table>';
-		}
+			document.getElementById("shopContainer").innerHTML += '<table class="shopButton2 unselectable" style="opacity:0.75" onclick="building.purchase('+i+')"><tr><td id="image"><img src="images/'+building.image[i]+'"></td><td id="nameAndCost"><p>'+building.name[i]+'</p><p style="color:red;"><span style="color:red;">'+building.cost[i]+'</span> cumjars</p></td><td id="amount"><span>'+building.count[i]+'</span></td></tr></table>';
+		
+	}
+	
 	}
 },
 	
@@ -433,6 +437,7 @@ setInterval(function() {
 setInterval(function() {
 	display.updateScore();
 	display.updateUpgrades();
+	display.updateShop();
 }, 10000);
 
 setInterval(function() {
