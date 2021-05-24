@@ -8,6 +8,45 @@
 	scrollbar-color: grey lightgrey; 
 }
 
+[data-title]:hover:after {
+    opacity: 1;
+    transition: all 0.1s ease 0.5s;
+    visibility: visible;
+	font-family: 'Pangolin', cursive;
+}
+[data-title]:after {
+    content: attr(data-title);
+    position: absolute;
+    bottom: 1.6em;
+    right: 100%;
+    padding: 4px 4px 4px 8px;
+    color: #222;
+    white-space: nowrap; 
+    -moz-border-radius: 5px; 
+    -webkit-border-radius: 5px;  
+    border-radius: 5px;  
+    -moz-box-shadow: 0px 0px 4px #222;  
+    -webkit-box-shadow: 0px 0px 4px #222;  
+	box-shadow: 0px 0px 4px #222;  
+    background-image: -moz-linear-gradient(top, #f8f8f8, #cccccc);  
+    background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #f8f8f8),color-stop(1, #cccccc));
+    background-image: -webkit-linear-gradient(top, #f8f8f8, #cccccc);  
+    background-image: -moz-linear-gradient(top, #f8f8f8, #cccccc);  
+    background-image: -ms-linear-gradient(top, #f8f8f8, #cccccc);  
+    background-image: -o-linear-gradient(top, #f8f8f8, #cccccc);
+    opacity: 0;
+    z-index: 99999;
+    visibility: hidden;
+}
+[data-title] {
+    position: relative;
+}
+
+.pseudo-tooltip-wrapper {
+    /*This causes the wrapping element to be the same size as what it contains.*/
+    display: inline-block;
+}
+
 /* Textbox */
 .modal {
   display: none; /* Hidden by default */
@@ -106,6 +145,8 @@ body {
 	text-shadow: 0 0 0 black;
 }
 
+
+
 .clickerContainer img {
 	position: relative;
 	transition: all .2s ease-in-out;
@@ -129,7 +170,7 @@ body {
 
 .shopButton:hover {
 	background-color: #c7c7c7;
-	transition: all .2s ease-in-out;
+	
 	cursor: url("./images/owo.png"), pointer;
 }
 
@@ -178,7 +219,7 @@ body {
 
 .shopButton2:hover {
 	background-color: #d7d7d7;
-	transition: all .2s ease-in-out;
+	
 	cursor: url("./images/owo.png"), pointer;
 }
 
@@ -230,6 +271,14 @@ body {
 
 .cursorpoint {
 	cursor: url("./images/owo.png"), pointer;
+}
+
+#upgradeContainer {
+	transition: all .2 ease-in-out;
+	border-radius: 10px;
+	width: 100%;
+	background-color: #c3b9b7;
+	border-radius: 10px;
 }
 
 #upgradeContainer img {

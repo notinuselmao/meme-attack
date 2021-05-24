@@ -5,6 +5,8 @@ document.addEventListener("keydown", function(event) {
 	}
 }, false);
 
+
+
 // Get the modal
 var modal = document.getElementById("myModal");
 
@@ -194,7 +196,7 @@ var achievement = {
 	],
 	description: [
 		"Buy 1 Goku",
-		"Gather 1000 Cumjars",
+		"Gather 1000 MLPJars",
 		"Click the Cumjar 1000 times"
 	],
 	image: [
@@ -229,18 +231,18 @@ var display = {
 	updateScore: function() {
 		document.getElementById("score").innerHTML = game.score;
 		document.getElementById("scorepersecond").innerHTML = game.getScorePerSecond();
-		document.title = game.score + " Cumjars - CUM CHECK";
+		document.title = game.score + " MLPJars - Meme Attack";
 	},
 	
 	updateShop: function() {
 		document.getElementById("shopContainer").innerHTML = "";
 		for (i = 0; i < building.name.length; i++) {
 		if (building.cost[i] <= game.score) {
-			document.getElementById("shopContainer").innerHTML += '<table class="shopButton unselectable" onclick="building.purchase('+i+')"><tr><td id="image"><img src="images/'+building.image[i]+'"></td><td id="nameAndCost"><p>'+building.name[i]+'</p><p><span>'+building.cost[i]+'</span> cumjars</p></td><td id="amount"><span>'+building.count[i]+'</span></td></tr></table>';
+			document.getElementById("shopContainer").innerHTML += '<table class="shopButton unselectable" onclick="building.purchase('+i+')"><tr><td id="image"><img src="images/'+building.image[i]+'"></td><td id="nameAndCost"><p>'+building.name[i]+'</p><p><span>'+building.cost[i]+'</span> MLPJars</p></td><td id="amount"><span>'+building.count[i]+'</span></td></tr></table>';
 		} else if (building.count[i] < 1) {
-			document.getElementById("shopContainer").innerHTML += '<table class="shopButton2 unselectable" style="opacity:0.75" onclick="building.purchase('+i+')"><tr><td id="image"><img src="images/'+building.image[i]+'" style="filter: brightness(0%)"></td><td id="nameAndCost"><p>???</p><p style="color:red;"><span style="color:red;">'+building.cost[i]+'</span> cumjars</p></td><td id="amount"><span>'+building.count[i]+'</span></td></tr></table>';
-		} else if (building.cost[i] >= game.score) {
-			document.getElementById("shopContainer").innerHTML += '<table class="shopButton2 unselectable" style="opacity:0.75" onclick="building.purchase('+i+')"><tr><td id="image"><img src="images/'+building.image[i]+'"></td><td id="nameAndCost"><p>'+building.name[i]+'</p><p style="color:red;"><span style="color:red;">'+building.cost[i]+'</span> cumjars</p></td><td id="amount"><span>'+building.count[i]+'</span></td></tr></table>';
+			document.getElementById("shopContainer").innerHTML += '<table class="shopButton2 unselectable" style="opacity:0.75" onclick="building.purchase('+i+')"><tr><td id="image"><img src="images/'+building.image[i]+'" style="filter: brightness(0%)"></td><td id="nameAndCost"><p>???</p><p style="color:red;"><span style="color:red;">'+building.cost[i]+'</span> MLPJars</p></td><td id="amount"><span>'+building.count[i]+'</span></td></tr></table>';
+		} else if (building.cost[i] > game.score) {
+			document.getElementById("shopContainer").innerHTML += '<table class="shopButton2 unselectable" style="opacity:0.75" onclick="building.purchase('+i+')"><tr><td id="image"><img src="images/'+building.image[i]+'"></td><td id="nameAndCost"><p>'+building.name[i]+'</p><p style="color:red;"><span style="color:red;">'+building.cost[i]+'</span> MLPJars</p></td><td id="amount"><span>'+building.count[i]+'</span></td></tr></table>';
 		
 	}
 	
@@ -252,9 +254,9 @@ var display = {
 		for (i = 0; i < upgrade.name.length; i++) {
 			if (!upgrade.purchased[i]){
 				if (upgrade.type[i] == "building" && building.count[upgrade.buildingIndex[i]] >= upgrade.requirement[i]) {
-					document.getElementById("upgradeContainer").innerHTML += '<img src="images/'+upgrade.image[i]+'" title="'+upgrade.name[i]+' &#10; '+upgrade.description[i]+' &#10; ('+upgrade.cost[i]+' cumjars)" onclick="upgrade.purchase('+i+')">';
+					document.getElementById("upgradeContainer").innerHTML += '<div class="pseudo-tooltip-wrapper" data-title="'+upgrade.name[i]+' &#10; '+upgrade.description[i]+' &#10; ('+upgrade.cost[i]+' MLPJars)"><img src="images/'+upgrade.image[i]+'" data-title="'+upgrade.name[i]+' &#10; '+upgrade.description[i]+' &#10; ('+upgrade.cost[i]+' MLPJars)" onclick="upgrade.purchase('+i+')"></div>';
 				} else if (upgrade.type[i] == "click" && game.totalClicks >= upgrade.requirement[i]) {
-					document.getElementById("upgradeContainer").innerHTML += '<img src="images/'+upgrade.image[i]+'" title="'+upgrade.name[i]+' &#10; '+upgrade.description[i]+' &#10; ('+upgrade.cost[i]+' cumjars)" onclick="upgrade.purchase('+i+')">';
+					document.getElementById("upgradeContainer").innerHTML += '<div class="pseudo-tooltip-wrapper" data-title="'+upgrade.name[i]+' &#10; '+upgrade.description[i]+' &#10; ('+upgrade.cost[i]+' MLPJars)"><img src="images/'+upgrade.image[i]+'" data-title="'+upgrade.name[i]+' &#10; '+upgrade.description[i]+' &#10; ('+upgrade.cost[i]+' MLPJars)" onclick="upgrade.purchase('+i+')"></div>';
 				} 
 			}
 		}
@@ -264,7 +266,7 @@ var display = {
 		document.getElementById("achievementContainer").innerHTML = "";
 		for (i = 0; i < achievement.name.length; i++) {
 			if (achievement.awarded[i]) {
-				document.getElementById("achievementContainer").innerHTML += '<img src="images/'+achievement.image[i]+'" title="'+achievement.name[i]+' &#10; '+achievement.description[i]+'">';
+				document.getElementById("achievementContainer").innerHTML += '<div class="pseudo-tooltip-wrapper" data-title="'+achievement.name[i]+' &#10; '+achievement.description[i]+'"><img src="images/'+achievement.image[i]+'"></div>';
 			}
 		}
 	},
@@ -431,13 +433,16 @@ setInterval(function() {
 	game.totalScore += game.getScorePerSecond();
 			
 	display.updateScore();
-	display.updateAchievements();
+	display.updateShop();
 }, 1000); // 1000ms = 1 second
+
+setInterval(function() {
+	display.updateAchievements();
+}, 5000);
 
 setInterval(function() {
 	display.updateScore();
 	display.updateUpgrades();
-	display.updateShop();
 }, 10000);
 
 setInterval(function() {
