@@ -54,7 +54,6 @@ var game = {
 		var scorePerSecond = 0;
 		for (i = 0; i < building.name.length; i++) {
 			scorePerSecond += building.income[i] * building.count[i];
-			
 			}
 			return scorePerSecond;
 	}
@@ -68,7 +67,8 @@ var building = {
 		"Consume the Milk",
 		"MikeWazowski",
 		"Average Enjoyer",
-		"Swim Noolde"
+		"Swim Noolde",
+		"Mango"
 	],
 	image: [
 		"dripgoku.png",
@@ -78,32 +78,37 @@ var building = {
 		"mike.jpg",
 		"average.png",
 		"noodle.png",
+		"mango.png",
 	],
-	count: [0, 0, 0, 0, 0, 0, 0,],
+	count: [0, 0, 0, 0, 0, 0, 0, 0,],
 	income: [
+		0.1,
 		1,
-		15,
-		70,
-		300,
-		1000,
-		2000,
-		3000,
+		8,
+		47,
+		260,
+		1400,
+		78000,
+		160000,
 	],
 	cost: [
 		15,
-		500,
-		1000,
-		4000,
-		10000,
-		50000,
-		80000,
+		100,
+		1100,
+		12000,
+		130000,
+		1400000,
+		20000000,
+		40000000,
 	],
+	
+	
 	
 	purchase: function(index) {
 		if (game.score >= this.cost[index]) {
 			game.score -= this.cost[index];
 			this.count[index]++;
-			this.cost[index] = Math.ceil(this.cost[index] * 1.50);
+			this.cost[index] = Math.ceil(this.cost[index] * 1.135);
 			
 			if (building.cost > game.score) {
 				display.test();
@@ -111,6 +116,8 @@ var building = {
 			display.updateScore();
 			display.updateShop();
 			display.updateUpgrades();
+			
+			
 		}	
 	}
 };
@@ -229,20 +236,20 @@ var achievement = {
 
 var display = {
 	updateScore: function() {
-		document.getElementById("score").innerHTML = game.score;
-		document.getElementById("scorepersecond").innerHTML = game.getScorePerSecond();
-		document.title = game.score + " MLPJars - Meme Attack";
+		document.getElementById("score").innerHTML = game.score.toLocaleString(undefined, {maximumFractionDigits: 0})
+		document.getElementById("scorepersecond").innerHTML = game.getScorePerSecond().toFixed(1);
+		document.title = game.score.toFixed(0) + " MLPJars - Meme Attack";
 	},
 	
 	updateShop: function() {
 		document.getElementById("shopContainer").innerHTML = "";
 		for (i = 0; i < building.name.length; i++) {
 		if (building.cost[i] <= game.score) {
-			document.getElementById("shopContainer").innerHTML += '<table class="shopButton unselectable" onclick="building.purchase('+i+')"><tr><td id="image"><img src="images/'+building.image[i]+'"></td><td id="nameAndCost"><p>'+building.name[i]+'</p><p><span>'+building.cost[i]+'</span> MLPJars</p></td><td id="amount"><span>'+building.count[i]+'</span></td></tr></table>';
+			document.getElementById("shopContainer").innerHTML += '<table class="shopButton unselectable" onclick="building.purchase('+i+')"><tr><td id="image"><img src="images/'+building.image[i]+'"></td><td id="nameAndCost"><p>'+building.name[i]+'</p><p><span>'+building.cost[i].toLocaleString()+'</span> MLPJars</p></td><td id="amount"><span>'+building.count[i]+'</span></td></tr></table>';
 		} else if (building.count[i] < 1) {
-			document.getElementById("shopContainer").innerHTML += '<table class="shopButton2 unselectable" style="opacity:0.75" onclick="building.purchase('+i+')"><tr><td id="image"><img src="images/'+building.image[i]+'" style="filter: brightness(0%)"></td><td id="nameAndCost"><p>???</p><p style="color:red;"><span style="color:red;">'+building.cost[i]+'</span> MLPJars</p></td><td id="amount"><span>'+building.count[i]+'</span></td></tr></table>';
+			document.getElementById("shopContainer").innerHTML += '<table class="shopButton2 unselectable" style="opacity:0.75" onclick="building.purchase('+i+')"><tr><td id="image"><img src="images/'+building.image[i]+'" style="filter: brightness(0%)"></td><td id="nameAndCost"><p>???</p><p style="color:red;"><span style="color:red;">'+building.cost[i].toLocaleString()+'</span> MLPJars</p></td><td id="amount"><span>'+building.count[i]+'</span></td></tr></table>';
 		} else if (building.cost[i] > game.score) {
-			document.getElementById("shopContainer").innerHTML += '<table class="shopButton2 unselectable" style="opacity:0.75" onclick="building.purchase('+i+')"><tr><td id="image"><img src="images/'+building.image[i]+'"></td><td id="nameAndCost"><p>'+building.name[i]+'</p><p style="color:red;"><span style="color:red;">'+building.cost[i]+'</span> MLPJars</p></td><td id="amount"><span>'+building.count[i]+'</span></td></tr></table>';
+			document.getElementById("shopContainer").innerHTML += '<table class="shopButton2 unselectable" style="opacity:0.75" onclick="building.purchase('+i+')"><tr><td id="image"><img src="images/'+building.image[i]+'"></td><td id="nameAndCost"><p>'+building.name[i]+'</p><p style="color:red;"><span style="color:red;">'+building.cost[i].toLocaleString()+'</span> MLPJars</p></td><td id="amount"><span>'+building.count[i]+'</span></td></tr></table>';
 		
 	}
 	
