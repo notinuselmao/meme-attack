@@ -5,7 +5,16 @@ document.addEventListener("keydown", function(event) {
 	}
 }, false);
 
-
+function play_F(file){
+  var audio = document.createElement('audio');
+  audio.src = file;
+  document.body.appendChild(audio);
+  audio.play();
+  
+  audio.onended = function () {
+    this.parentNode.removeChild(this);
+  }
+};
 
 // Get the modal
 var modal = document.getElementById("myModal");
@@ -109,10 +118,6 @@ var building = {
 			game.score -= this.cost[index];
 			this.count[index]++;
 			this.cost[index] = Math.ceil(this.cost[index] * 1.135);
-			
-			if (building.cost > game.score) {
-				display.test();
-			} else
 			display.updateScore();
 			display.updateShop();
 			display.updateUpgrades();
